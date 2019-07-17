@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sagrado_flutter_ui/src/screens/chose_place/chose_place_provider.dart';
+import 'package:sagrado_flutter_ui/src/widgets/bottom_navigation.dart';
 
 class ChosePlaceScreen extends StatelessWidget {
   @override
@@ -38,7 +39,10 @@ class ChosePlaceScreen extends StatelessWidget {
             },
             onPressed: () {
               if (placesState.onCheckPlaces()) {
-                // TODO(uuttff8): implement navigator to bottom navigation bar widget
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CustomBottomNavigation()),
+                );
               } else {
                 showPlatformDialog(
                   context: context,
