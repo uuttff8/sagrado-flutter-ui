@@ -13,6 +13,15 @@ class PlaceNotifier with ChangeNotifier {
     place.isSelected = !place.isSelected;
     notifyListeners();
   }
+
+  void onAllClick() {
+    places.map((Place place) => place.isSelected = true).toList();
+    notifyListeners();
+  }
+
+  bool onCheckPlaces() {
+    return places.where((Place place) => place.isSelected == true).isNotEmpty;
+  }
 }
 
 class Place {
@@ -20,6 +29,7 @@ class Place {
 
   String title;
   String imageUrl;
+  int id;
 
   bool isSelected = false;
 }

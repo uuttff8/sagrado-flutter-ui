@@ -8,7 +8,6 @@ class ChosePlaceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     PlaceNotifier placesState = Provider.of<PlaceNotifier>(context);
 
-
     final Size size = MediaQuery.of(context).size;
     final double itemHeight = 197;
     final double itemWidth = size.width / 2;
@@ -20,7 +19,9 @@ class ChosePlaceScreen extends StatelessWidget {
           ios: (_) {
             return CupertinoButtonData(padding: EdgeInsets.zero);
           },
-          onPressed: () {},
+          onPressed: () {
+            placesState.onAllClick();
+          },
         ),
         trailingActions: <Widget>[
           PlatformButton(
@@ -35,7 +36,21 @@ class ChosePlaceScreen extends StatelessWidget {
             ios: (_) {
               return CupertinoButtonData(padding: EdgeInsets.zero);
             },
-            onPressed: () {},
+            onPressed: () {
+              if (placesState.onCheckPlaces()) {
+                // TODO(uuttff8): implement navigator to bottom navigation bar widget
+              } else {
+                showPlatformDialog(
+                  context: context,
+                  builder: (_) => PlatformAlertDialog(
+                    title: Text('Выберите хотя бы один клуб'),
+                    actions: <Widget>[
+                      PlatformDialogAction(onPressed: () {Navigator.pop(context);}, child: Text('Ok'),),
+                    ],
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),
@@ -58,7 +73,9 @@ class ChosePlaceScreen extends StatelessWidget {
                         alignment: Alignment.topRight,
                         children: [
                           Opacity(
-                            opacity: placesState.places[index].isSelected ? 0.6 : 1.0,
+                            opacity: placesState.places[index].isSelected
+                                ? 0.6
+                                : 1.0,
                             child: Image.network(
                               placesState.places[index].imageUrl,
                               fit: BoxFit.fill,
