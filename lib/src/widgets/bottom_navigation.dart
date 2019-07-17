@@ -60,7 +60,7 @@ class _CustomBottomNavigationState extends State<CustomBottomNavigation> {
       case 2:
         _updateCurrentItem(TabItem.Sales);
         break;
-      case 3: 
+      case 3:
         _updateCurrentItem(TabItem.Places);
         break;
       case 4:
