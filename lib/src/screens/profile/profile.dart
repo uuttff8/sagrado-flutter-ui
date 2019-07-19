@@ -1,75 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sagrado_flutter_ui/src/screens/history/history.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: PlatformScaffold(
-        body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              ProfileAppBar(),
-              Padding(
-                padding:
-                    const EdgeInsets.only(right: 16.0, top: 30.0, left: 16),
-                child: BonusesWidget(),
-              ),
-              HistoryButton(),
-              Divider(height: 0),
-              Container(
-                alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(top: 20, left: 16, right: 16),
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints viewportConstraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: viewportConstraints.maxHeight,
+            ),
+            child: PlatformScaffold(
+              body: SafeArea(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'События',
-                          style: TextStyle(fontFamily: 'Circe', fontSize: 17),
-                        ),
-                        Container(
-                          height: 2,
-                          width: 45,
-                          color: Colors.black,
-                        ),
-                      ],
+                    ProfileAppBar(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 16.0, top: 30.0, left: 16),
+                      child: BonusesWidget(),
                     ),
-                    SizedBox(height: 17),
-                    Container(
-                      height: 150,
-                      child: GridView.count(
-                        // Create a grid with 2 columns. If you change the scrollDirection to
-                        // horizontal, this produces 2 rows.
-                        crossAxisCount: 1,
-                        scrollDirection: Axis.horizontal,
-                        // Generate 100 widgets that display their index in the List.
-                        children: List.generate(100, (index) {
-                          return Center(
-                            child: Text(
-                              'Item $index',
-                              style: Theme.of(context).textTheme.headline,
-                            ),
-                          );
-                        }),
-                      ),
-                    )
+                    HistoryButton(),
+                    Divider(height: 0),
+                    ListViewProfile(title: "События"),
+                    ListViewProfile(title: "Акции"),
                   ],
                 ),
-              )
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ListViewProfile extends StatelessWidget {
+  const ListViewProfile({
+    Key key,
+    @required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.only(top: 20, left: 16, right: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                title,
+                style: TextStyle(fontFamily: 'Circe', fontSize: 17),
+              ),
+              Container(
+                height: 2,
+                width: 45,
+                color: Colors.black,
+              ),
             ],
           ),
-        ),
+          SizedBox(height: 17),
+          Container(
+            height: 150,
+            child: GridView.count(
+              crossAxisCount: 1,
+              scrollDirection: Axis.horizontal,
+              children: List.generate(100, (index) {
+                return Center(
+                  child: Text(
+                    'Item $index',
+                    style: Theme.of(context).textTheme.headline,
+                  ),
+                );
+              }),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -101,7 +120,10 @@ class HistoryButton extends StatelessWidget {
           ],
         ),
         onPressed: () {
-          print('history button pressed');
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HistoryScreen()),
+          );
         },
       ),
     );
@@ -184,11 +206,14 @@ class BonusesWidget extends StatelessWidget {
                   'БОНУСЫ',
                   style: TextStyle(fontFamily: 'Circe', fontSize: 9),
                 ),
-                Text('5000' + ' ₽',
-                    style: TextStyle(
-                        fontFamily: 'Circe',
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold))
+                Text(
+                  '5000' + ' ₽',
+                  style: TextStyle(
+                    fontFamily: 'Circe',
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),

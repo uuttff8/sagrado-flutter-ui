@@ -41,7 +41,14 @@ class ChosePlaceScreen extends StatelessWidget {
               if (placesState.onCheckPlaces()) {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CustomBottomNavigation()),
+                  MaterialPageRoute(
+                    builder: (context) => WillPopScope(
+                      onWillPop: () async {
+                        return true;
+                      },
+                      child: CustomBottomNavigation(),
+                    ),
+                  ),
                 );
               } else {
                 showPlatformDialog(
@@ -49,7 +56,12 @@ class ChosePlaceScreen extends StatelessWidget {
                   builder: (_) => PlatformAlertDialog(
                     title: Text('Выберите хотя бы один клуб'),
                     actions: <Widget>[
-                      PlatformDialogAction(onPressed: () {Navigator.pop(context);}, child: Text('Ok'),),
+                      PlatformDialogAction(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Ok'),
+                      ),
                     ],
                   ),
                 );
