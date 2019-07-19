@@ -20,15 +20,15 @@ enum TabItem { Profile, Event, Sales, Places, About }
 String _tabItemName(TabItem tabItem) {
   switch (tabItem) {
     case TabItem.Profile:
-      return "Profile";
+      return "Профиль";
     case TabItem.Event:
-      return "Event";
+      return "События";
     case TabItem.Sales:
-      return "Sales";
+      return "Акции";
     case TabItem.Places:
-      return "Places";
+      return "Площадки";
     case TabItem.About:
-      return "About";
+      return "О нас";
   }
 
   return null;

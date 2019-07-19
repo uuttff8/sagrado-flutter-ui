@@ -9,15 +9,16 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-    return true;
-  },
-          child: PlatformScaffold(
+        return true;
+      },
+      child: PlatformScaffold(
         body: SafeArea(
           child: Column(
             children: <Widget>[
               ProfileAppBar(),
               Padding(
-                padding: const EdgeInsets.only(right: 16.0, top: 30.0, left: 16),
+                padding:
+                    const EdgeInsets.only(right: 16.0, top: 30.0, left: 16),
                 child: BonusesWidget(),
               ),
               HistoryButton(),
