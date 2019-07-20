@@ -58,7 +58,6 @@ class _EventScreenState extends State<EventScreen> {
               Expanded(
                 child: Container(
                   height: 48,
-                  //color: Colors.lightGreenAccent,
                   child: CupertinoSegmentedControl(
                       selectedColor: Colors.black,
                       borderColor: Colors.black,
